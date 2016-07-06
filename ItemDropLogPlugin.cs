@@ -328,10 +328,12 @@ namespace ItemDropLog
 					int num3 = queryResult2.Get<int>("ItemStack");
 					string text6 = queryResult2.Get<string>("ItemPrefix");
 					StringBuilder stringBuilder = new StringBuilder();
-					if (text6 != "None")
+					stringBuilder.Append(num3).Append(' ');
+					//prefix isn't working
+					/*if (text6 != "None")
 					{
 						stringBuilder.Append(text6).Append(' ');
-					}
+					}*/
 					stringBuilder.Append(value);
 					if (itemById.maxStack > 1)
 					{
@@ -427,10 +429,12 @@ namespace ItemDropLog
 					int num3 = queryResult2.Get<int>("ItemStack");
 					string text6 = queryResult2.Get<string>("ItemPrefix");
 					StringBuilder stringBuilder = new StringBuilder();
-					if (text6 != "None")
+					stringBuilder.Append(num3).Append(' ');
+					//Prefix not working
+					/*if (text6 != "None")
 					{
 						stringBuilder.Append(text6).Append(' ');
-					}
+					}*/
 					stringBuilder.Append(value);
 					if (itemById.maxStack > 1)
 					{

@@ -11,3 +11,10 @@ C:\Users\SirGamesAlot\Desktop\ItemDroplog\bin\Debug\BCrypt.Net.dll
 C:\Users\SirGamesAlot\Desktop\ItemDroplog\obj\Debug\ItemDropLog.csprojResolveAssemblyReference.cache
 C:\Users\SirGamesAlot\Desktop\ItemDroplog\obj\Debug\ItemDropLog.dll
 C:\Users\SirGamesAlot\Desktop\ItemDroplog\obj\Debug\ItemDropLog.pdb
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\bin\Debug\ItemDropLog.dll
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\bin\Debug\ItemDropLog.pdb
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\bin\Debug\HttpServer.dll
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\bin\Debug\BCrypt.Net.dll
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\obj\Debug\ItemDropLog.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\obj\Debug\ItemDropLog.dll
+C:\Users\Admin\Documents\GitHub\ItemDropLogger\obj\Debug\ItemDropLog.pdb
