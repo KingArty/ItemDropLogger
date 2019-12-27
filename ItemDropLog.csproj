@@ -32,26 +32,29 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Data.Sqlite">
-      <HintPath>..\tshock_4.3.16 (2)\ServerPlugins\Mono.Data.Sqlite.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\tshock_4.3.16 (2)\ServerPlugins\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Web">
-      <HintPath>..\tshock_4.3.16 (2)\mysql.web.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Reference\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
+    <Reference Include="HttpServer">
+      <HintPath>References\HttpServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>References\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>References\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>References\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OTAPI">
+      <HintPath>References\OTAPI.dll</HintPath>
+    </Reference>
     <Reference Include="TerrariaServer">
-      <HintPath>..\tshock_4.3.16 (2)\TerrariaServer.exe</HintPath>
+      <HintPath>References\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>..\tshock_4.3.16 (2)\ServerPlugins\TShockAPI.dll</HintPath>
+      <HintPath>References\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
