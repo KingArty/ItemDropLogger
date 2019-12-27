@@ -1,7 +1,9 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace ItemDropLog
 {
@@ -27,35 +29,27 @@ namespace ItemDropLog
 
 		public Config()
 		{
-			this.IgnoredItems = new List<string>
-			{
-				"Copper Coin",
-				"Silver Coin",
-				"Gold Coin",
-				"Platinum Coin",
-				"Heart",
-				"Candy Apple",
-				"Candy Cane",
-				"Mana Star",
-				"Soul Cake",
-				"Sugar Plum"
-			};
+			this.IgnoredItems = new List<string>{};
 		}
 
 		public static void CreateInstance(string path)
 		{
-			if (string.IsNullOrEmpty(path) || !File.Exists(path))
-			{
-				Config.instance = new Config();
-				return;
-			}
-			using (Stream stream = File.OpenRead(path))
-			{
-				using (StreamReader streamReader = new StreamReader(stream))
-				{
-					Config.instance = JsonConvert.DeserializeObject<Config>(streamReader.ReadToEnd());
-				}
-			}
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                Config.instance = new Config();
+                return;
+            }
+            else
+            {
+                using (Stream stream = File.OpenRead(path))
+                {
+                    using (StreamReader streamReader = new StreamReader(stream))
+                    {
+                        Config.instance = JsonConvert.DeserializeObject<Config>(streamReader.ReadToEnd());
+                        return;
+                    }
+                }
+            }
 		}
 
 		public static void SaveInstance(string path)

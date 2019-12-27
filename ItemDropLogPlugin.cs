@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Mono.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using System;
@@ -10,10 +11,11 @@ using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 using TShockAPI.DB;
+using TShockAPI.Localization;
 
 namespace ItemDropLog
 {
-	[ApiVersion(1, 23)]
+	[ApiVersion(2, 1)]
 	public class ItemDropLogPlugin : TerrariaPlugin
 	{
 		private static readonly string ConfigPath = Path.Combine(TShock.SavePath, "itemdroplog.json");
@@ -59,7 +61,7 @@ namespace ItemDropLog
 		{
 			get
 			{
-				return new Version(1, 1, 1);
+				return new Version(1, 2, 0);
 			}
 		}
 
@@ -104,10 +106,11 @@ namespace ItemDropLog
 
 		private void OnInitialize(EventArgs args)
 		{
-			Commands.ChatCommands.Add(new Command("droplog.search", PlayerItemHistoryReceive, "lr") { AllowServer = true });
-			Commands.ChatCommands.Add(new Command("droplog.search", PlayerItemHistoryGive, "lg") { AllowServer = true });
-			Commands.ChatCommands.Add(new Command("droplog.reload", PlayerItemHistoryReload, "lreload") { AllowServer = true });
-			Commands.ChatCommands.Add(new Command("droplog.flush", PlayerItemHistoryFlush, "lflush") { AllowServer = true });
+			Commands.ChatCommands.Add(new Command("droplog.search", PlayerItemHistoryReceive, "lr") { AllowServer = true, HelpText = "Check what items the target player has received"});
+			Commands.ChatCommands.Add(new Command("droplog.search", PlayerItemHistoryGive, "lg") { AllowServer = true, HelpText = "Check what items the target player has given."});
+			Commands.ChatCommands.Add(new Command("droplog.reload", PlayerItemHistoryReload, "lreload") { AllowServer = true, HelpText = "Reloads the itemdroplog configuration file." });
+			Commands.ChatCommands.Add(new Command("droplog.flush", PlayerItemHistoryFlush, "lflush") { AllowServer = true, HelpText = "Clears the itemdrop logs." });
+            Commands.ChatCommands.Add(new Command("droplog.list", ListIgnoredItems, "li") { AllowServer = true, HelpText = "Lists items that do not get logged." });
 
 			switch (TShock.Config.StorageType.ToLower())
 			{
@@ -298,7 +301,7 @@ namespace ItemDropLog
 				if (itemByIdOrName.Count > 1)
 				{
 					TShock.Utils.SendMultipleMatchError(args.Player, from x in itemByIdOrName
-					select x.name);
+					select x.Name);
 					return;
 				}
 				item = itemByIdOrName[0];
@@ -310,8 +313,8 @@ namespace ItemDropLog
 			}
 			else
 			{
-                queryResult2 = db.QueryReader("SELECT * FROM `ItemLog` WHERE `TargetPlayerName`=@0 ORDER BY `Timestamp` DESC LIMIT @1,@2", text2, (num - 1) * 5, 5);
-			}
+                queryResult2 = db.QueryReader("SELECT * FROM `ItemLog` WHERE `TargetPlayerName`=@0 ORDER BY `Timestamp` DESC LIMIT @1,@2", text2, (num - 1) * 5, 15);
+			}   
 			using (queryResult2)
 			{
 				args.Player.SendInfoMessage("Results for {0}:", text2);
@@ -329,11 +332,11 @@ namespace ItemDropLog
 					string text6 = queryResult2.Get<string>("ItemPrefix");
 					StringBuilder stringBuilder = new StringBuilder();
 					stringBuilder.Append(num3).Append(' ');
-					//prefix isn't working
-					/*if (text6 != "None")
+					//Prefix should be working
+					if (text6 != "None")
 					{
 						stringBuilder.Append(text6).Append(' ');
-					}*/
+					}
 					stringBuilder.Append(value);
 					if (itemById.maxStack > 1)
 					{
@@ -399,7 +402,7 @@ namespace ItemDropLog
 				if (itemByIdOrName.Count > 1)
 				{
 					TShock.Utils.SendMultipleMatchError(args.Player, from x in itemByIdOrName
-					select x.name);
+					select x.Name);
 					return;
 				}
 				item = itemByIdOrName[0];
@@ -430,11 +433,11 @@ namespace ItemDropLog
 					string text6 = queryResult2.Get<string>("ItemPrefix");
 					StringBuilder stringBuilder = new StringBuilder();
 					stringBuilder.Append(num3).Append(' ');
-					//Prefix not working
-					/*if (text6 != "None")
+					//Prefix should be working
+					if (text6 != "None")
 					{
 						stringBuilder.Append(text6).Append(' ');
-					}*/
+					}
 					stringBuilder.Append(value);
 					if (itemById.maxStack > 1)
 					{
@@ -509,12 +512,23 @@ namespace ItemDropLog
 			return string.Join(" ", list);
 		}
 
-		private string GetPrefixName(int pre)
+        private void ListIgnoredItems(CommandArgs args)
+        {
+            args.Player.SendMessage("The following drops are not logged:", Color.BlanchedAlmond);
+            string ignoredItems = this._ignoredItems[0].Name;
+            for (int i = 1; i < this._ignoredItems.Count; i++)
+            {
+                ignoredItems += $", {this._ignoredItems[i].Name}";
+            }
+            args.Player.SendMessage(ignoredItems + ".", Color.Pink);
+        }
+
+        private string GetPrefixName(int pre)
 		{
 			string result = "None";
 			if (pre > 0)
 			{
-				result = Lang.prefix[pre];
+                result = EnglishLanguage.GetPrefixById(pre);
 			}
 			return result;
 		}

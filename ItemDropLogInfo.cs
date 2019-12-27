@@ -1,6 +1,7 @@
 using System;
 using Terraria;
 using TShockAPI;
+using TShockAPI.Localization;
 
 namespace ItemDropLog
 {
@@ -75,7 +76,7 @@ namespace ItemDropLog
 			Item itemById = TShock.Utils.GetItemById(netId);
 			if (itemById != null && itemById.netID == netId)
 			{
-				return itemById.name;
+				return itemById.Name;
 			}
 			return string.Empty;
 		}
@@ -85,8 +86,8 @@ namespace ItemDropLog
 			string result = "None";
 			if (pre > 0)
 			{
-				result = Lang.prefix[pre];
-			}
+				result = EnglishLanguage.GetPrefixById(pre);
+            }
 			return result;
 		}
 	}
